@@ -23,14 +23,12 @@ def generate_text(prompt):
         json=data
     )
 
-    if response.ok:
-        response_json = response.json()
-        if "choices" in response_json and len(response_json["choices"]) > 0 and "message" in response_json["choices"][0]:
-            return response_json["choices"][0]["message"]["content"]
-        else:
-            return "Desculpe, não consegui gerar uma curiosidade no momento."
+
+    response_json = response.json()
+    if response_json == 200:
+        return response_json["choices"][0]["message"]["content"]
     else:
-        return "Desculpe, algo deu errado ao se comunicar com o servidor."
+        return "Desculpe, não consegui gerar uma curiosidade no momento."
 
 def main():
     st.title("Aplicação para curiosidades aleatorias!")
