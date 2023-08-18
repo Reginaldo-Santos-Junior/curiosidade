@@ -3,7 +3,6 @@ import requests
 
 api_key = st.secrets["chave_api"]["api_key"]
 
-
 def generate_text(prompt):
     headers = {
         "Content-Type": "application/json",
@@ -24,13 +23,14 @@ def generate_text(prompt):
         json=data
     )
 
-    response_json = response.json()
-
-    if "choices" in response_json and len(response_json["choices"]) > 0 and "message" in response_json["choices"][0]:
-        return response_json["choices"][0]["message"]["content"]
+    if response.ok:
+        response_json = response.json()
+        if "choices" in response_json and len(response_json["choices"]) > 0 and "message" in response_json["choices"][0]:
+            return response_json["choices"][0]["message"]["content"]
+        else:
+            return "Desculpe, não consegui gerar uma curiosidade no momento."
     else:
-        return "Desculpe, não consegui gerar uma curiosidade no momento."
-
+        return "Desculpe, algo deu errado ao se comunicar com o servidor."
 
 def main():
     st.title("Aplicação para curiosidades aleatorias!")
@@ -43,7 +43,6 @@ def main():
         generated_response = generate_text(prompt)
         st.text("Curiosidade 👇:")
         st.write(generated_response)
-
 
 if __name__ == "__main__":
     main()
