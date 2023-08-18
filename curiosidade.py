@@ -23,7 +23,11 @@ def generate_text(prompt):
         json=data
     )
     response_json = response.json()
-    return response_json["choices"][0]["message"]["content"] if "choices" in response_json else ""
+    if "choices" in response_json:
+        resposta = response_json["choices"][0]["message"]["content"]
+        return str(resposta)
+    else:
+        return ""
 
 def main():
     st.title("Aplicação para curiosidades aleatorias!")
