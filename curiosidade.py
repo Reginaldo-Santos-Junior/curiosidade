@@ -26,7 +26,7 @@ def generate_text(prompt):
 
     response_json = response.json()
     if response_json == 200:
-        return response_json["choices"][0]["message"]["content"]
+        return response_json["choices"][0]["message"]
     else:
         return "Desculpe, não consegui gerar uma curiosidade no momento."
 
